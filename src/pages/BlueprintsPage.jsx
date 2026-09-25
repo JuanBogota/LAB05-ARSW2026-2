@@ -9,7 +9,7 @@ import BlueprintCanvas from '../components/BlueprintCanvas.jsx'
 
 export default function BlueprintsPage() {
   const dispatch = useDispatch()
-  const { byAuthor, current, status } = useSelector((s) => s.blueprints)
+  const { byAuthor, current, status, error } = useSelector((s) => s.blueprints)
   const [authorInput, setAuthorInput] = useState('')
   const [selectedAuthor, setSelectedAuthor] = useState('')
   const items = byAuthor[selectedAuthor] || []
@@ -56,7 +56,12 @@ export default function BlueprintsPage() {
             {selectedAuthor ? `${selectedAuthor}'s blueprints:` : 'Results'}
           </h3>
           {status === 'loading' && <p>Cargando...</p>}
-          {!items.length && status !== 'loading' && <p>Sin resultados.</p>}
+          {status === 'failed' && error && (
+              <p style={{color:'#f87171', fontWeight:600 }}>{error}</p>
+              )}
+          {status !== 'loading' && status !== 'failed' && !items.length && (
+              <p>Sin resultados.</p>)
+              }
           {!!items.length && (
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
