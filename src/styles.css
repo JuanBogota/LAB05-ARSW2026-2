@@ -77,3 +77,72 @@ nav a {
 nav a.active {
   background: #334155;
 }
+
+/* ---- Tabla de resultados ---- */
+.table-wrap {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th {
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #94a3b8;
+  border-bottom: 1px solid #334155;
+}
+.table th.numeric {
+  text-align: right;
+}
+.table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #1f2937;
+}
+.table td.numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.table tbody tr {
+  transition: background 0.15s ease;
+}
+.table tbody tr:hover {
+  background: rgba(148, 163, 184, 0.06);
+}
+
+/* ---- Botones: estados ---- */
+.btn {
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+.btn:hover {
+  background: #273449;
+}
+.btn.primary:hover {
+  background: #1d4ed8;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Tarjetas: pequeño realce ---- */
+.card h2,
+.card h3 {
+  letter-spacing: -0.01em;
+}
+.total-points {
+  margin-top: 12px;
+  font-weight: 700;
+  color: #93c5fd;
+}
+.error-text {
+  color: #f87171;
+  font-weight: 600;
+}
+.empty-state {
+  color: #64748b;
+  font-style: italic;
+}

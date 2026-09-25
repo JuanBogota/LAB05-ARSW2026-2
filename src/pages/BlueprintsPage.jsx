@@ -56,66 +56,38 @@ export default function BlueprintsPage() {
             {selectedAuthor ? `${selectedAuthor}'s blueprints:` : 'Results'}
           </h3>
           {status === 'loading' && <p>Cargando...</p>}
-          {status === 'failed' && error && (
-              <p style={{color:'#f87171', fontWeight:600 }}>{error}</p>
-              )}
+          {status === 'failed' && error && <p className="error-text">{error}</p>}
           {status !== 'loading' && status !== 'failed' && !items.length && (
-              <p>Sin resultados.</p>)
-              }
-          {!!items.length && (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: 'left',
-                        padding: '8px',
-                        borderBottom: '1px solid #334155',
-                      }}
-                    >
-                      Blueprint name
-                    </th>
-                    <th
-                      style={{
-                        textAlign: 'right',
-                        padding: '8px',
-                        borderBottom: '1px solid #334155',
-                      }}
-                    >
-                      Number of points
-                    </th>
-                    <th style={{ padding: '8px', borderBottom: '1px solid #334155' }}></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((bp) => (
-                    <tr key={bp.name}>
-                      <td style={{ padding: '8px', borderBottom: '1px solid #1f2937' }}>
-                        {bp.name}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          textAlign: 'right',
-                          borderBottom: '1px solid #1f2937',
-                        }}
-                      >
-                        {bp.points?.length || 0}
-                      </td>
-                      <td style={{ padding: '8px', borderBottom: '1px solid #1f2937' }}>
-                        <button className="btn" onClick={() => openBlueprint(bp)}>
-                          Open
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+              <p className="empty-state">Sin resultados.</p>
           )}
-          <p style={{ marginTop: 12, fontWeight: 700 }}>Total user points: {totalPoints}</p>
-        </div>
+            {!!items.length && (
+                <div className="table-wrap">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                              <th>Blueprint name</th>
+                              <th className="numeric">Number of points</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {items.map((bp) => (
+                              <tr key={bp.name}>
+                                <td>{bp.name}</td>
+                                <td className="numeric">{bp.points?.length || 0}</td>
+                                <td>
+                                  <button className="btn" onClick={() => openBlueprint(bp)}>
+                                    Open
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+          <p className="total-points">Total user points: {totalPoints}</p>
+          </div>
       </section>
 
       <section className="card">
