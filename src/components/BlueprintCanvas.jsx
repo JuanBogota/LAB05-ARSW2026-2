@@ -24,22 +24,42 @@ export default function BlueprintCanvas({ points = [], width = 520, height = 360
       ctx.lineTo(canvas.width, y)
       ctx.stroke()
     }
-    if (points.length > 1) {
-      ctx.strokeStyle = '#93c5fd'
-      ctx.lineWidth = 2
-      ctx.beginPath()
-      ctx.moveTo(points[0].x, points[0].y)
-      for (let i = 1; i < points.length; i++) {
-        const p = points[i]
-        ctx.lineTo(p.x, p.y)
-      }
-      ctx.stroke()
-    }
-    ctx.fillStyle = '#fbbf24'
+    const padding = 30
+    const xs = points.map((p) => p.x)
+    const ys = points.map((p) => p.y)
+    const minX = points.length ? Math.min(...xs) : 0
+    const maxX = points.length ? Math.max(...xs) : 0
+    const minY = points.length ? Math.min(...ys) : 0
+    const maxY = points.length ? Math.max(...ys) : 0
+    const rangeX = maxX - minX || 1
+    const rangeY = maxY - minY || 1
+    const scale = Math.min(
+          (canvas.width - padding * 2) / rangeX,
+          (canvas.height - padding * 2) / rangeY,
+        )
+        const toScreen = (p) => ({
+          x: padding + (p.x - minX) * scale,
+          y: padding + (p.y - minY) * scale,
+        })
+
+        if (points.length > 1) {
+          ctx.strokeStyle = '#93c5fd'
+          ctx.lineWidth = 2
+          ctx.beginPath()
+          const first = toScreen(points[0])
+          ctx.moveTo(first.x, first.y)
+          for (let i = 1; i < points.length; i++) {
+            const sp = toScreen(points[i])
+            ctx.lineTo(sp.x, sp.y)
+          }
+          ctx.stroke()
+        }
+        ctx.fillStyle = '#fbbf24'
     for (const p of points) {
-      ctx.beginPath()
-      ctx.arc(p.x, p.y, 4, 0, Math.PI * 2)
-      ctx.fill()
+        const sp = toScreen(p)
+        ctx.beginPath()
+        ctx.arc(sp.x, sp.y, 4, 0, Math.PI * 2)
+        ctx.fill()
     }
   }, [points])
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import api from '../services/apiClient.js'
+import { authApi } from '../services/apiClient.js'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
@@ -10,8 +10,8 @@ export default function LoginPage() {
     e.preventDefault()
     setError(null)
     try {
-      const { data } = await api.post('/auth/login', { username, password })
-      localStorage.setItem('token', data.token)
+      const { data } = await authApi.post('/auth/login', { username, password })
+      localStorage.setItem('token', data.access_token)
       alert('Login exitoso')
     } catch (e) {
       setError('Credenciales inválidas o servidor no disponible')

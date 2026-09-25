@@ -2,29 +2,29 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../services/apiClient.js'
 
 export const fetchAuthors = createAsyncThunk('blueprints/fetchAuthors', async () => {
-  const { data } = await api.get('/blueprints')
+  const { data: { data } } = await api.get('/blueprints')
   // Expecting API returns array of {author, name, points}
   const authors = [...new Set(data.map((bp) => bp.author))]
   return authors
 })
 
 export const fetchByAuthor = createAsyncThunk('blueprints/fetchByAuthor', async (author) => {
-  const { data } = await api.get(`/blueprints/${encodeURIComponent(author)}`)
+  const { data: { data } } = await api.get(`/blueprints/${encodeURIComponent(author)}`)
   return { author, items: data }
 })
 
 export const fetchBlueprint = createAsyncThunk(
   'blueprints/fetchBlueprint',
   async ({ author, name }) => {
-    const { data } = await api.get(
-      `/blueprints/${encodeURIComponent(author)}/${encodeURIComponent(name)}`,
-    )
+  const { data: { data } } = await api.get(
+     `/blueprints/${encodeURIComponent(author)}/${encodeURIComponent(name)}`,
+  )
     return data
   },
 )
 
 export const createBlueprint = createAsyncThunk('blueprints/createBlueprint', async (payload) => {
-  const { data } = await api.post('/blueprints', payload)
+    const { data: { data } } = await api.post('/blueprints', payload)
   return data
 })
 
