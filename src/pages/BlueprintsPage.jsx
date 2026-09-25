@@ -56,7 +56,13 @@ export default function BlueprintsPage() {
             {selectedAuthor ? `${selectedAuthor}'s blueprints:` : 'Results'}
           </h3>
           {status === 'loading' && <p>Cargando...</p>}
-          {status === 'failed' && error && <p className="error-text">{error}</p>}
+          {status === 'failed' && error && (
+              <div>
+                  <p className="error-text">{error}</p>
+                  <button className="btn" onClick={getBlueprints} disabled={!authorInput}>Reintentar
+                      </button>
+                      </div>
+                      )}
           {status !== 'loading' && status !== 'failed' && !items.length && (
               <p className="empty-state">Sin resultados.</p>
           )}
