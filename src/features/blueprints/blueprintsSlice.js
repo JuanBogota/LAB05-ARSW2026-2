@@ -1,31 +1,26 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../../services/apiClient.js'
+import blueprintsService from '../../services/blueprintsService.js'
 
 export const fetchAuthors = createAsyncThunk('blueprints/fetchAuthors', async () => {
-  const { data: { data } } = await api.get('/blueprints')
-  // Expecting API returns array of {author, name, points}
+  const data = await blueprintsService.getAll()
   const authors = [...new Set(data.map((bp) => bp.author))]
   return authors
 })
 
 export const fetchByAuthor = createAsyncThunk('blueprints/fetchByAuthor', async (author) => {
-  const { data: { data } } = await api.get(`/blueprints/${encodeURIComponent(author)}`)
-  return { author, items: data }
+  const items = await blueprintsService.getByAuthor(author)
+  return { author, items }
 })
 
 export const fetchBlueprint = createAsyncThunk(
   'blueprints/fetchBlueprint',
   async ({ author, name }) => {
-  const { data: { data } } = await api.get(
-     `/blueprints/${encodeURIComponent(author)}/${encodeURIComponent(name)}`,
-  )
-    return data
+    return await blueprintsService.getByAuthorAndName(author, name)
   },
 )
 
 export const createBlueprint = createAsyncThunk('blueprints/createBlueprint', async (payload) => {
-    const { data: { data } } = await api.post('/blueprints', payload)
-  return data
+  return await blueprintsService.create(payload)
 })
 
 const slice = createSlice({

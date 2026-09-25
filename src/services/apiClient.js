@@ -9,6 +9,7 @@ export const authApi = axios.create({
   baseURL: import.meta.env.VITE_AUTH_BASE_URL || 'http://localhost:8080',
   timeout: 8000,
 })
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
