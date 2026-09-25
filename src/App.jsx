@@ -2,6 +2,8 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import BlueprintsPage from './pages/BlueprintsPage.jsx'
 import BlueprintDetailPage from './pages/BlueprintDetailPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import NewBlueprintPage from './pages/NewBlueprintPage.jsx'
+import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -13,6 +15,7 @@ export default function App() {
           <NavLink to="/" end>
             Blueprints
           </NavLink>
+          <NavLink to="/blueprints/new">Nuevo</NavLink>
           <NavLink to="/login">Login</NavLink>
         </nav>
       </header>
@@ -20,6 +23,9 @@ export default function App() {
         <Route path="/" element={<BlueprintsPage />} />
         <Route path="/blueprints/:author/:name" element={<BlueprintDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/blueprints/new" element={<NewBlueprintPage />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
